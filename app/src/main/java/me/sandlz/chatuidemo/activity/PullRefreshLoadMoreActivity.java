@@ -3,7 +3,7 @@ package me.sandlz.chatuidemo.activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,9 +50,8 @@ public class PullRefreshLoadMoreActivity extends BaseActivity implements
     }
 
     private void initView() {
-        GridLayoutManager manager = new GridLayoutManager(this, 1);
         adapter = new PullAdapter(dataManager.getFakeData(10));
-        recyclerView.setLayoutManager(manager);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         // header refresh view
         refreshLayout.setHeaderViewBackgroundColor(Color.WHITE);

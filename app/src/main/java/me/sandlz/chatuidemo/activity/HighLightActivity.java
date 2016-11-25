@@ -3,7 +3,7 @@ package me.sandlz.chatuidemo.activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -48,16 +48,17 @@ public class HighLightActivity extends BaseActivity {
     }
 
     private void initView() {
-        GridLayoutManager manager = new GridLayoutManager(this, 1);
-
         adapter = new HighLightAdapter(new ArrayList<SearchMsgEntity>(),"");
-        recyclerView.setLayoutManager(manager);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
     }
 
     @Event(R.id.search_search)
     private void search(View view) {
+        if (et_text.getText().toString().length() == 0) {
+            return;
+        }
         // 提示框
         btn_search.setText("获取中...");
         Log.d("zliu","开始计算时间：- "+System.currentTimeMillis());
