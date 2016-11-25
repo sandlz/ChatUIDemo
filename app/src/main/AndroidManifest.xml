@@ -21,7 +21,8 @@
         </activity>
         <activity android:name=".activity.BaseActivity" />
         <activity android:name=".activity.ChatActivity" />
-        <activity android:name=".activity.HighLightActivity"></activity>
+        <activity android:name=".activity.HighLightActivity" />
+        <activity android:name=".activity.PullRefreshLoadMoreActivity"></activity>
     </application>
 
 </manifest>

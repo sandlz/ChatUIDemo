@@ -107,19 +107,37 @@ public class DataManager {
         return results;
     }
 
-    private List<SearchMsgEntity> getFakeData() {
+    public List<SearchMsgEntity> getFakeData() {
         List<SearchMsgEntity> results = new ArrayList<>();
         SearchMsgEntity entity = new SearchMsgEntity(getRandomImageUrl(0),"第一小组","群成员:xxx,uuu,yyy");
         SearchMsgEntity entity2 = new SearchMsgEntity(getRandomImageUrl(1),"第二小组","群成员:ooo,qqq,yyy");
-        SearchMsgEntity entity3 = new SearchMsgEntity(getRandomImageUrl(2),"刘柱","第一组已到达");
-        SearchMsgEntity entity4 = new SearchMsgEntity(getRandomImageUrl(3),"王颖","3条搜索激励");
-        SearchMsgEntity entity5 = new SearchMsgEntity(getRandomImageUrl(4),"朱晶晶","2条搜索记录");
+        SearchMsgEntity entity3 = new SearchMsgEntity(getRandomImageUrl(2),"zliu","第一组已到达");
+        SearchMsgEntity entity4 = new SearchMsgEntity(getRandomImageUrl(3),"ywang","3条搜索激励");
+        SearchMsgEntity entity5 = new SearchMsgEntity(getRandomImageUrl(4),"jjz","2条搜索记录");
+        SearchMsgEntity entity6 = new SearchMsgEntity(getRandomImageUrl(5),"gcheng","2条搜索记录");
+        SearchMsgEntity entity7 = new SearchMsgEntity(getRandomImageUrl(6),"yzhan","2条搜索记录");
+        SearchMsgEntity entity8 = new SearchMsgEntity(getRandomImageUrl(7),"test","2条搜索记录");
+        SearchMsgEntity entity9 = new SearchMsgEntity(getRandomImageUrl(8),"test01","2条搜索记录");
+        SearchMsgEntity entity10 = new SearchMsgEntity(getRandomImageUrl(9),"test02","2条搜索记录");
+        SearchMsgEntity entity11 = new SearchMsgEntity(getRandomImageUrl(1),"test03","2条搜索记录");
+        SearchMsgEntity entity12 = new SearchMsgEntity(getRandomImageUrl(2),"test04","2条搜索记录");
         results.add(entity);
         results.add(entity2);
         results.add(entity3);
         results.add(entity4);
         results.add(entity5);
+        results.add(entity6);
+        results.add(entity7);
+        results.add(entity8);
+        results.add(entity9);
+        results.add(entity10);
+        results.add(entity11);
+        results.add(entity12);
         return results;
+    }
+
+    public List<SearchMsgEntity> getFakeData(int size) {
+        return getFakeData().subList(0,size-1);
     }
 
     private SpannableStringBuilder getStyle(int color,String content, String key) {

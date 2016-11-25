@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    tools:context="me.sandlz.chatuidemo.activity.PullRefreshLoadMoreActivity">
+
+    <me.sandlz.chatuidemo.wiget.SuperSwipeRefreshLayout
+        android:id="@+id/pull_swipeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/pull_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#fff">
+        </android.support.v7.widget.RecyclerView>
+    </me.sandlz.chatuidemo.wiget.SuperSwipeRefreshLayout>
+
+</RelativeLayout>

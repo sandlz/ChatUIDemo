@@ -30,5 +30,11 @@ public class MainActivity extends BaseActivity {
         intent.setClass(this,HighLightActivity.class);
         startActivity(intent);
     }
+    @Event(R.id.main_pull)
+    private void pull(View view) {
+        Intent intent = new Intent();
+        intent.setClass(this,PullRefreshLoadMoreActivity.class);
+        startActivity(intent);
+    }
 
 }
