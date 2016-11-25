@@ -2,6 +2,8 @@
 RecyclerView 适配器使用
 感谢[BaseRecyclerViewAdapterHelper](https://github.com/CymChad/BaseRecyclerViewAdapterHelper)无私奉献~
 
+详细使用：[ChatUIDemo示例程序详情](http://sandlz.me/2016/11/22/RecyclerView%E5%AE%9E%E6%88%98/)
+
 Demo主要展示
 - 多布局聊天页实现
 - 高亮显示搜索结果(仿QQ)
@@ -13,4 +15,3 @@ Demo主要展示
 <img src="http://7xsap2.com1.z0.glb.clouddn.com/highLight.gif" width = "399" height = "633" />
 </div>
 
-详细使用：[ChatUIDemo示例程序详情](http://sandlz.me/2016/11/22/RecyclerView%E5%AE%9E%E6%88%98/)
