@@ -6,3 +6,5 @@ Demo主要展示
 - 多布局聊天页实现
 - 高亮显示搜索结果(仿QQ)
 - 非侵入式的下拉刷新(支持自定义布局)
+
+详细使用：[ChatUIDemo示例程序详情](http://sandlz.me/2016/11/22/RecyclerView%E5%AE%9E%E6%88%98/)
