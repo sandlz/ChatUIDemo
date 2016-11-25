@@ -6,7 +6,7 @@
     android:background="#fff"
     tools:context="me.sandlz.chatuidemo.activity.PullRefreshLoadMoreActivity">
 
-    <me.sandlz.chatuidemo.wiget.SuperSwipeRefreshLayout
+    <me.sandlz.chatuidemo.widget.SuperSwipeRefreshLayout
         android:id="@+id/pull_swipeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -17,6 +17,6 @@
             android:layout_height="match_parent"
             android:background="#fff">
         </android.support.v7.widget.RecyclerView>
-    </me.sandlz.chatuidemo.wiget.SuperSwipeRefreshLayout>
+    </me.sandlz.chatuidemo.widget.SuperSwipeRefreshLayout>
 
 </RelativeLayout>

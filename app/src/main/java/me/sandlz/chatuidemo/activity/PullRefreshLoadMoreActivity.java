@@ -19,7 +19,7 @@ import org.xutils.view.annotation.ViewInject;
 import me.sandlz.chatuidemo.R;
 import me.sandlz.chatuidemo.adapter.PullAdapter;
 import me.sandlz.chatuidemo.manager.DataManager;
-import me.sandlz.chatuidemo.wiget.SuperSwipeRefreshLayout;
+import me.sandlz.chatuidemo.widget.SuperSwipeRefreshLayout;
 
 @ContentView(R.layout.activity_pull_refresh_load_more)
 public class PullRefreshLoadMoreActivity extends BaseActivity implements
