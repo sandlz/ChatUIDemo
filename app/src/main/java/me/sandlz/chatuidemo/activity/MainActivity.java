@@ -24,4 +24,11 @@ public class MainActivity extends BaseActivity {
         startActivity(intent);
     }
 
+    @Event(R.id.main_highlight)
+    private void highLight(View view) {
+        Intent intent = new Intent();
+        intent.setClass(this,HighLightActivity.class);
+        startActivity(intent);
+    }
+
 }

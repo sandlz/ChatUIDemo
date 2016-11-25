@@ -7,19 +7,26 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".activity.MainActivity">
+    tools:context="me.sandlz.chatuidemo.activity.HighLightActivity">
 
+    <EditText
+        android:id="@+id/search_edit"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        />
     <Button
-        android:id="@+id/main_clickme"
+        android:id="@+id/search_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="点我" />
-    <Button
-        android:id="@+id/main_highlight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/main_clickme"
-        android:text="高亮" />
+        android:layout_toRightOf="@id/search_edit"
+        android:text="搜索"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/search_recycler"
+        android:layout_below="@id/search_edit"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </android.support.v7.widget.RecyclerView>
 </RelativeLayout>

@@ -21,6 +21,7 @@
         </activity>
         <activity android:name=".activity.BaseActivity" />
         <activity android:name=".activity.ChatActivity" />
+        <activity android:name=".activity.HighLightActivity"></activity>
     </application>
 
 </manifest>

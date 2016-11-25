@@ -1,10 +1,16 @@
 package me.sandlz.chatuidemo.manager;
 
+import android.graphics.Color;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import me.sandlz.chatuidemo.entity.ChatMutiItems;
+import me.sandlz.chatuidemo.entity.SearchMsgEntity;
 
 /**
  * Created by liuzhu on 2016/11/22.
@@ -82,4 +88,46 @@ public class DataManager {
 
         return dataList.get(pos);
     }
+
+    // 模拟搜索
+    public List<SearchMsgEntity> getSearchReuslt(String key) {
+        List<SearchMsgEntity> results = new ArrayList<>();
+        List<SearchMsgEntity> source = getFakeData();
+
+        for (SearchMsgEntity s : source) {
+            if (s.getName().contains(key)) {
+                s.setNameStyle(getStyle(Color.BLUE,s.getName(),key));
+                results.add(s);
+            }
+            if (s.getContent().contains(key)) {
+                s.setContentStyle(getStyle(Color.BLUE,s.getContent(),key));
+                results.add(s);
+            }
+        }
+        return results;
+    }
+
+    private List<SearchMsgEntity> getFakeData() {
+        List<SearchMsgEntity> results = new ArrayList<>();
+        SearchMsgEntity entity = new SearchMsgEntity(getRandomImageUrl(0),"第一小组","群成员:xxx,uuu,yyy");
+        SearchMsgEntity entity2 = new SearchMsgEntity(getRandomImageUrl(1),"第二小组","群成员:ooo,qqq,yyy");
+        SearchMsgEntity entity3 = new SearchMsgEntity(getRandomImageUrl(2),"刘柱","第一组已到达");
+        SearchMsgEntity entity4 = new SearchMsgEntity(getRandomImageUrl(3),"王颖","3条搜索激励");
+        SearchMsgEntity entity5 = new SearchMsgEntity(getRandomImageUrl(4),"朱晶晶","2条搜索记录");
+        results.add(entity);
+        results.add(entity2);
+        results.add(entity3);
+        results.add(entity4);
+        results.add(entity5);
+        return results;
+    }
+
+    private SpannableStringBuilder getStyle(int color,String content, String key) {
+        SpannableStringBuilder style = new SpannableStringBuilder(content);
+        int fstart = content.indexOf(key);
+        int fend   = fstart+key.length();
+        style.setSpan(new ForegroundColorSpan(color),fstart,fend, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+        return style;
+    }
+
 }

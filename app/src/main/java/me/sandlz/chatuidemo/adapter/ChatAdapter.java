@@ -86,6 +86,7 @@ public class ChatAdapter extends BaseMultiItemQuickAdapter<ChatMutiItems,BaseVie
         }
         // 添加点击事件
         holder.addOnClickListener(R.id.item_text_content);
+//        holder.addOnLongClickListener()
     }
 
     // 别人发的文本消息

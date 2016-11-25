@@ -43,6 +43,7 @@ public class ChatActivity extends BaseActivity {
 
     private void initView() {
         final GridLayoutManager manager = new GridLayoutManager(this, 1);
+//        manager.setOrientation();
         DataManager dataManager = new DataManager();
         // 构造数据
         data = dataManager.getMutiItems();
@@ -68,6 +69,7 @@ public class ChatActivity extends BaseActivity {
                 Log.d("zliu","onItemChildClick- id - "+view.getId());
             }
         });
+
     }
 
     // 局部刷新
