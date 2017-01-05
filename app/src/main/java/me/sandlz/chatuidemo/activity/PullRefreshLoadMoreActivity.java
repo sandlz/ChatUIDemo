@@ -2,9 +2,9 @@ package me.sandlz.chatuidemo.activity;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,20 +16,24 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import me.sandlz.chatuidemo.R;
 import me.sandlz.chatuidemo.adapter.PullAdapter;
+import me.sandlz.chatuidemo.manager.DataCallBackListener;
 import me.sandlz.chatuidemo.manager.DataManager;
 import me.sandlz.chatuidemo.widget.SuperSwipeRefreshLayout;
 
 @ContentView(R.layout.activity_pull_refresh_load_more)
 public class PullRefreshLoadMoreActivity extends BaseActivity implements
-        SuperSwipeRefreshLayout.OnPullRefreshListener,BaseQuickAdapter.RequestLoadMoreListener{
+        SuperSwipeRefreshLayout.OnPullRefreshListener,BaseQuickAdapter.RequestLoadMoreListener ,DataCallBackListener{
 
     @ViewInject(R.id.pull_recycler)
     RecyclerView recyclerView;
 
     private PullAdapter adapter;
-    DataManager dataManager = new DataManager();
+    DataManager dataManager = null;
 
     @ViewInject(R.id.pull_swipeLayout)
     SuperSwipeRefreshLayout refreshLayout;
@@ -42,6 +46,11 @@ public class PullRefreshLoadMoreActivity extends BaseActivity implements
     private int currentCount = 10;
     private int totalCount = 12;
 
+    private int page = 1;
+    private int pageCountSize = 10;
+    private List<String> dataList = new ArrayList<>();
+    private boolean refresh = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,12 +59,14 @@ public class PullRefreshLoadMoreActivity extends BaseActivity implements
     }
 
     private void initView() {
-        adapter = new PullAdapter(dataManager.getFakeData(10));
+        adapter = new PullAdapter(dataList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         // header refresh view
         refreshLayout.setHeaderViewBackgroundColor(Color.WHITE);
         refreshLayout.setHeaderView(createRefreshHeader());// add headerView
+        dataManager = new DataManager();
+        dataManager.setListener(this);
     }
 
     private View createRefreshHeader() {
@@ -79,27 +90,15 @@ public class PullRefreshLoadMoreActivity extends BaseActivity implements
 
     @Override
     public void onRefresh() {
+        refresh = true;
         // 下拉刷新
         header_textView.setText("正在刷新");
         header_imageView.setVisibility(View.GONE);
         header_progressBar.setVisibility(View.VISIBLE);
-
+        dataList.clear();
         adapter.setEnableLoadMore(false);
-        currentCount = 10;
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                adapter.setNewData(dataManager.getFakeData(10));
-                refreshLayout.setRefreshing(false);
-                header_progressBar.setVisibility(View.GONE);
-                if (currentCount >= totalCount) {
-                    adapter.setEnableLoadMore(false);
-                }else {
-                    adapter.setEnableLoadMore(true);
-                }
-            }
-        }, 1000);
-
+        page = 1;
+        dataManager.getNamesByPage(page);
     }
 
     @Override
@@ -116,20 +115,37 @@ public class PullRefreshLoadMoreActivity extends BaseActivity implements
 
     @Override
     public void onLoadMoreRequested() {
+        refresh = false;
         // 上拉加载更多
         refreshLayout.setEnabled(false);
-        recyclerView.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (currentCount < totalCount) {
-                    adapter.setNewData(dataManager.getFakeData(12));
-                    currentCount = totalCount;
-                }else {
+        page ++;
+        dataManager.getNamesByPage(page);
+    }
+
+    @Override
+    public void callBackDataList(List<String> data) {
+        Log.d("zliu","page: "+page + " 大小: "+data.size());
+        if (refresh) {
+            refreshLayout.setRefreshing(false);
+            adapter.setEnableLoadMore(true);
+            header_progressBar.setVisibility(View.GONE);
+            dataList.addAll(data);
+            adapter.setNewData(dataList);
+        }else {
+            if (null != data && data.size() > 0) {
+                dataList.addAll(data);
+                adapter.setNewData(dataList);
+                if (data.size() < 10) {
                     adapter.loadMoreEnd();
+//                    adapter.setEnableLoadMore(false);
+                }else {
+                    adapter.loadMoreComplete();
                 }
-                refreshLayout.setEnabled(true);
+            }else {
+                adapter.loadMoreEnd();
             }
-        }, 1000);
+            refreshLayout.setEnabled(true);
+        }
 
     }
 }

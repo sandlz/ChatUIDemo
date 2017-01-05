@@ -1,6 +1,7 @@
 package me.sandlz.chatuidemo.manager;
 
 import android.graphics.Color;
+import android.os.Handler;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
@@ -21,12 +22,16 @@ public class DataManager {
 
     private List times = new ArrayList();
 
+    private List<String> names = new ArrayList<>();
+    private DataCallBackListener listener;
+
     public DataManager() {
         initChatTimelist();
+        initNamesData();
     }
 
     public List<ChatMutiItems> getMutiItems() {
-        Random random=new Random();
+        Random random = new Random();
 
         List<ChatMutiItems> data = new ArrayList<>();
         for (int i = 0; i < 50; i++) {
@@ -36,13 +41,13 @@ public class DataManager {
                 items = new ChatMutiItems(1, 1);
                 items.setUserHeadUrl("http://7xsap2.com1.z0.glb.clouddn.com/favicon200.png");
                 items.setUserName("zliu");
-                items.setContent("我是第"+ i +"条内容");
+                items.setContent("我是第" + i + "条内容");
             } else if (i % 3 == 0) {
                 // 别人发的文字
                 items = new ChatMutiItems(2, 1);
                 items.setUserHeadUrl("http://up.qqjia.com/z/25/tu32703_10.png");
                 items.setUserName("ywang");
-                items.setContent("我是第"+ i +"条内容");
+                items.setContent("我是第" + i + "条内容");
             } else if (i % 5 == 0) {
                 // 我发的图片
                 items = new ChatMutiItems(3, 1);
@@ -96,11 +101,11 @@ public class DataManager {
 
         for (SearchMsgEntity s : source) {
             if (s.getName().contains(key)) {
-                s.setNameStyle(getStyle(Color.BLUE,s.getName(),key));
+                s.setNameStyle(getStyle(Color.BLUE, s.getName(), key));
                 results.add(s);
             }
             if (s.getContent().contains(key)) {
-                s.setContentStyle(getStyle(Color.BLUE,s.getContent(),key));
+                s.setContentStyle(getStyle(Color.BLUE, s.getContent(), key));
                 results.add(s);
             }
         }
@@ -109,18 +114,18 @@ public class DataManager {
 
     public List<SearchMsgEntity> getFakeData() {
         List<SearchMsgEntity> results = new ArrayList<>();
-        SearchMsgEntity entity = new SearchMsgEntity(getRandomImageUrl(0),"第一小组","群成员:xxx,uuu,yyy");
-        SearchMsgEntity entity2 = new SearchMsgEntity(getRandomImageUrl(1),"第二小组","群成员:ooo,qqq,yyy");
-        SearchMsgEntity entity3 = new SearchMsgEntity(getRandomImageUrl(2),"zliu","第一组已到达");
-        SearchMsgEntity entity4 = new SearchMsgEntity(getRandomImageUrl(3),"ywang","3条搜索激励");
-        SearchMsgEntity entity5 = new SearchMsgEntity(getRandomImageUrl(4),"jjz","2条搜索记录");
-        SearchMsgEntity entity6 = new SearchMsgEntity(getRandomImageUrl(5),"gcheng","2条搜索记录");
-        SearchMsgEntity entity7 = new SearchMsgEntity(getRandomImageUrl(6),"yzhan","2条搜索记录");
-        SearchMsgEntity entity8 = new SearchMsgEntity(getRandomImageUrl(7),"test","2条搜索记录");
-        SearchMsgEntity entity9 = new SearchMsgEntity(getRandomImageUrl(8),"test01","2条搜索记录");
-        SearchMsgEntity entity10 = new SearchMsgEntity(getRandomImageUrl(9),"test02","2条搜索记录");
-        SearchMsgEntity entity11 = new SearchMsgEntity(getRandomImageUrl(1),"test03","2条搜索记录");
-        SearchMsgEntity entity12 = new SearchMsgEntity(getRandomImageUrl(2),"test04","2条搜索记录");
+        SearchMsgEntity entity = new SearchMsgEntity(getRandomImageUrl(0), "第一小组", "群成员:xxx,uuu,yyy");
+        SearchMsgEntity entity2 = new SearchMsgEntity(getRandomImageUrl(1), "第二小组", "群成员:ooo,qqq,yyy");
+        SearchMsgEntity entity3 = new SearchMsgEntity(getRandomImageUrl(2), "zliu", "第一组已到达");
+        SearchMsgEntity entity4 = new SearchMsgEntity(getRandomImageUrl(3), "ywang", "3条搜索激励");
+        SearchMsgEntity entity5 = new SearchMsgEntity(getRandomImageUrl(4), "jjz", "2条搜索记录");
+        SearchMsgEntity entity6 = new SearchMsgEntity(getRandomImageUrl(5), "gcheng", "2条搜索记录");
+        SearchMsgEntity entity7 = new SearchMsgEntity(getRandomImageUrl(6), "yzhan", "2条搜索记录");
+        SearchMsgEntity entity8 = new SearchMsgEntity(getRandomImageUrl(7), "test", "2条搜索记录");
+        SearchMsgEntity entity9 = new SearchMsgEntity(getRandomImageUrl(8), "test01", "2条搜索记录");
+        SearchMsgEntity entity10 = new SearchMsgEntity(getRandomImageUrl(9), "test02", "2条搜索记录");
+        SearchMsgEntity entity11 = new SearchMsgEntity(getRandomImageUrl(1), "test03", "2条搜索记录");
+        SearchMsgEntity entity12 = new SearchMsgEntity(getRandomImageUrl(2), "test04", "2条搜索记录");
         results.add(entity);
         results.add(entity2);
         results.add(entity3);
@@ -137,15 +142,54 @@ public class DataManager {
     }
 
     public List<SearchMsgEntity> getFakeData(int size) {
-        return getFakeData().subList(0,size-1);
+        return getFakeData().subList(0, size - 1);
     }
 
-    private SpannableStringBuilder getStyle(int color,String content, String key) {
+    private void initNamesData() {
+        for (int i = 0; i < 34; i++) {
+            String temp = "";
+            if (i < 9) {
+                temp += "0" + (i+1);
+            } else {
+                temp += "" + (i+1);
+            }
+            names.add("位置-" + temp);
+        }
+    }
+
+    public void getNamesByPage(int page) {
+        List<String> data = new ArrayList<>();
+        if (page == 1) {
+            data = names.subList(0, 10);
+        } else if (page == 2) {
+            data = names.subList(10, 20);
+        } else if (page == 3) {
+            data = names.subList(20, 30);
+        } else if (page == 4) {
+            data = names.subList(30, 33);
+        }
+        if (null != listener) {
+            final List<String> finalData = data;
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    listener.callBackDataList(finalData);
+                }
+            }, 1000);
+
+
+        }
+    }
+
+    private SpannableStringBuilder getStyle(int color, String content, String key) {
         SpannableStringBuilder style = new SpannableStringBuilder(content);
         int fstart = content.indexOf(key);
-        int fend   = fstart+key.length();
-        style.setSpan(new ForegroundColorSpan(color),fstart,fend, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+        int fend = fstart + key.length();
+        style.setSpan(new ForegroundColorSpan(color), fstart, fend, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
         return style;
     }
 
+    public void setListener(DataCallBackListener listener) {
+        this.listener = listener;
+    }
 }
